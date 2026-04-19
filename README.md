@@ -1,21 +1,21 @@
 # BFSI Call Center AI Assistant
 
-📌 Project Overview
+### 📌 Project Overview
 
 The BFSI Call Center AI Assistant is a lightweight, compliant AI system designed to handle common customer queries in the Banking, Financial Services, and Insurance (BFSI) domain.
 
-Use cases:
+**Use cases:**
 1. Loan eligibility and application status
 2. EMI details and schedules
 3. Interest rate information
 4. Payment and transaction queries
 5. Basic account support
 
-📌 System Architecture
+### 📌 System Architecture
 
 ![BFSI Call Center AI Assistant System Architecture](https://github.com/user-attachments/assets/776f2081-372f-4b7a-a4a3-59debe18e59f)
 
-📌 Response Priority Logic
+### 📌 Response Priority Logic
 
 Tier 1 -- Strong dataset similarity	Return stored response
 
@@ -25,15 +25,15 @@ Tier 3 -- Generate via local SLM
 
 This ensures a safety-first design.
 
-📌 Core Components
+### 📌 Core Components
 
-1️⃣ Dataset Layer (Primary Response Layer)
+**1️⃣ Dataset Layer (Primary Response Layer)**
 1. 200+ BFSI conversation samples
 2. Alpaca format (Instruction, Input, Output)
 3. Professional and compliant tone
 4. Embedded using all-mpnet-base-v2
 
-Role:
+**Role:**
 If cosine similarity score exceeds threshold →
 Return stored response directly.
 This ensures:
@@ -41,53 +41,53 @@ This ensures:
 2. Zero hallucination
 3. Policy-safe responses
 
-2️⃣ Small Language Model (Local SLM)
+**2️⃣ Small Language Model (Local SLM)**
 1. Lightweight instruction-based model
 2. Runs locally via Ollama
 3. Model: phi3:mini
 
-Role:
+**Role:**
 Used only when:
 No strong dataset similarity match is found
 This provides flexibility while maintaining safety.
 
-3️⃣ RAG Layer (Knowledge Retrieval)
+**3️⃣ RAG Layer (Knowledge Retrieval)**
 Used for complex financial or policy-related queries such as:
 1. Interest rate explanations
 2. EMI breakdowns
 3. Prepayment penalties
 4. Foreclosure policies
 
-Implementation:
+**Implementation:**
 1. Structured knowledge base (knowledge_base.json)
 2. Embedded into vectors
 3. Retrieved via cosine similarity
 4. Injected into controlled prompt
 
-Role:
+**Role:**
 Provide grounded, policy-based responses.
 
-🔎 How Embeddings Are Generated
+### 🔎 How Embeddings Are Generated
 
-We use the model:
+**We use the model:**
 
 all-mpnet-base-v2
 
 which converts each text input into a 768-dimensional vector that captures its semantic meaning.
 
-Process:
+**Process:**
 
-Prepare Text:
+**Prepare Text:**
 
 1. For dataset matching: instruction + input are combined.
 2. For knowledge retrieval: JSON content is flattened into text chunks.
    
-Generate Embeddings:
+**Generate Embeddings:**
 
 1. embeddings = model.encode(text_list, convert_to_numpy=True)
 2. Each text entry is converted into a fixed-size vector.
    
-Store Embeddings:
+**Store Embeddings:**
 
 1. Saved as .npy files for fast loading.
 2. Original text/metadata stored separately in JSON.
@@ -95,7 +95,7 @@ Store Embeddings:
 
 At runtime, the user query is converted into an embedding and compared with stored embeddings using cosine similarity to find the most relevant match.
 
-📌 Guardrails & Compliance
+### 📌 Guardrails & Compliance
 
 The assistant enforces strict BFSI safety rules:
 1. No guessing financial numbers
@@ -106,7 +106,7 @@ The assistant enforces strict BFSI safety rules:
 
 Low-temperature generation (0.3) is used to reduce randomness.
 
-📌 Technical Stack
+### 📌 Technical Stack
 
 Embeddings → Sentence Transformers
 
@@ -120,7 +120,7 @@ Similarity → Cosine Similarity
 
 Data Format	→ Alpaca
 
-📌 Project Structure
+### 📌 Project Structure
 
 main.py                     → Orchestrates full pipeline
 
@@ -140,7 +140,7 @@ knowledge_base.json         → Policy knowledge documents
 
 alpaca_bfsi_sample.json     → BFSI dataset
 
-📌 Outcome
+### 📌 Outcome
 
 A modular, production-style BFSI AI assistant that demonstrates:
 
